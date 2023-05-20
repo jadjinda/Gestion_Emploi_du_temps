@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.interfacegraphique.MainController">
+    <left>
+        <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0598ff;" BorderPane.alignment="CENTER">
+            <children>
+                <Text fill="WHITE" layoutX="62.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MON EMPLOI DU TEMPS">
+                    <font>
+                        <Font size="23.0" />
+                    </font></Text>
+                <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="129.0" layoutY="245.0" size="100" />
+            </children></AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="500.0" prefWidth="415.0" BorderPane.alignment="CENTER">
+            <children>
+                <TextField fx:id="isusername" layoutX="118.0" layoutY="171.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                <PasswordField fx:id="ispassword" layoutX="118.0" layoutY="238.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                <Hyperlink layoutX="46.0" layoutY="442.0" text="Mot de passe oublié ?" textFill="#0598ff" />
+                <Text fill="#0598ff" layoutX="139.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inscription">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Text>
+                <Button fx:id="signup" layoutX="137.0" layoutY="374.0" mnemonicParsing="false" onAction="#insertion" prefHeight="34.0" prefWidth="95.0" style="-fx-background-color: #0598ff;" text="Inscription" textFill="WHITE" />
+                <FontAwesomeIcon fill="#0598ff" glyphName="USER" layoutX="84.0" layoutY="197.0" size="20" />
+                <FontAwesomeIcon fill="#0598ff" glyphName="USER_SECRET" layoutX="84.0" layoutY="264.0" size="20" />
+                <FontAwesomeIcon fill="#0598ff" glyphName="USERS" layoutX="168.0" layoutY="91.0" size="35" />
+                <Button layoutX="277.0" layoutY="12.0" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="42.0" style="-fx-background-color: transparent;" />
+                <FontAwesomeIcon fill="#0598ff" glyphName="CLOSE" layoutX="291.0" layoutY="44.0" size="20" />
+            <PasswordField fx:id="isrenter" layoutX="119.0" layoutY="302.0" promptText="Re-enter the password for confirmation...." style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <FontAwesomeIcon fill="#0598ff" glyphName="KEY" layoutX="85.0" layoutY="328.0" size="20" />
+            <Hyperlink fx:id="retour" layoutX="200.0" layoutY="441.0" onAction="#connexion" text="Se connecter ?" textFill="#0598ff" />
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>

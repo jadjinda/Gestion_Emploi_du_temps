@@ -1,0 +1,27 @@
+CREATE DATABASE EmploiDuTemps;
+USE EmploiDuTemps;
+
+CREATE TABLE admin(
+id INT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(30) NOT NULL,
+password VARCHAR(20))ENGINE=InnoDB;
+ 
+INSERT INTO admin (username,password)VALUES('admin','admin');
+
+CREATE TABLE user(
+id INT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(30)NOT NULL,
+password VARCHAR(20))ENGINE=InnoDB;
+
+INSERT INTO user(username,password)VALUES('user','1234');
+
+CREATE TABLE guest(
+id INT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(30)NOT NULL,
+password VARCHAR(20))ENGINE=InnoDB;
+
+CREATE TABLE classe(
+id INT PRIMARY KEY AUTO_INCREMENT,
+intitule VARCHAR(30),
+code VARCHAR(30))ENGINE=InnoDB;
+INSERT INTO classe(intitule,code)VALUES('DEV WEB','IT231');
