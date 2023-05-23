@@ -2,7 +2,6 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1370.0" style="-fx-background-color: withesmoke;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.interfacegraphique.PagesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1370.0" style="-fx-background-color: withesmoke;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.interfacegraphique.EmploiDuTempsController">
     <children>
-        <Button layoutX="16.0" layoutY="123.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="ACCEUIL" textFill="WHITE" />
+        <Button fx:id="Acceuil" layoutX="16.0" layoutY="123.0" mnemonicParsing="false" onAction="#acceuil" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="ACCEUIL" textFill="WHITE" />
         <Pane layoutX="-3.0" prefHeight="102.0" prefWidth="276.0" style="-fx-background-color: #0598ff;">
             <children>
                 <Text fill="WHITE" layoutX="86.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADMIN">
@@ -27,18 +26,19 @@
             </children>
         </Pane>
         <Separator layoutX="271.0" layoutY="102.0" orientation="VERTICAL" prefHeight="623.0" prefWidth="2.0" />
-        <Button layoutX="17.0" layoutY="514.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION DE COUR" textFill="WHITE" />
-        <Button layoutX="14.0" layoutY="223.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION DE CLASSE" textFill="WHITE" />
-        <Button layoutX="14.0" layoutY="418.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION ANNEE " textFill="WHITE" />
-        <Button layoutX="16.0" layoutY="321.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION D'ENSEIGNANT" textFill="WHITE" />
-        <Button layoutX="17.0" layoutY="609.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION D'EMPLOI DU TEMPS" textFill="WHITE" />
+        <Button fx:id="Cour" layoutX="17.0" layoutY="575.0" mnemonicParsing="false" onAction="#cour" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION DE COUR" textFill="WHITE" />
+        <Button fx:id="Classe" layoutX="14.0" layoutY="208.0" mnemonicParsing="false" onAction="#classe" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION DE CLASSE" textFill="WHITE" />
+        <Button fx:id="Annee" layoutX="14.0" layoutY="394.0" mnemonicParsing="false" onAction="#annee" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION ANNEE " textFill="WHITE" />
+        <Button fx:id="Matiere" layoutX="16.0" layoutY="483.0" mnemonicParsing="false" onAction="#matiere" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION MATIERE " textFill="WHITE" />
+        <Button fx:id="Enseignant" layoutX="16.0" layoutY="301.0" mnemonicParsing="false" onAction="#enseignant" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION D'ENSEIGNANT" textFill="WHITE" />
+        <Button fx:id="EmploiDuTemps" layoutX="18.0" layoutY="665.0" mnemonicParsing="false" onAction="#emploiDuTemps" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #0598ff;" text="CREATION D'EMPLOI DU TEMPS" textFill="WHITE" />
         <Pane layoutY="721.0" prefHeight="30.0" prefWidth="1456.0" style="-fx-background-color: #0598ff;" />
         <FontAwesomeIcon fill="WHITE" glyphName="HOME" layoutX="33.0" layoutY="155.0" size="20" />
-        <FontAwesomeIcon fill="WHITE" glyphName="BUILDING" layoutX="32.0" layoutY="255.0" size="20" />
-        <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="32.0" layoutY="353.0" size="20" />
-        <FontAwesomeIcon fill="WHITE" glyphName="CALENDAR" layoutX="33.0" layoutY="450.0" size="20" />
-        <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="38.0" layoutY="546.0" size="20" />
-        <FontAwesomeIcon fill="WHITE" glyphName="DESKTOP" layoutX="22.0" layoutY="641.0" size="20" />
+        <FontAwesomeIcon fill="WHITE" glyphName="BUILDING" layoutX="31.0" layoutY="240.0" size="20" />
+        <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="32.0" layoutY="333.0" size="20" />
+        <FontAwesomeIcon fill="WHITE" glyphName="CALENDAR" layoutX="33.0" layoutY="426.0" size="20" />
+        <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="34.0" layoutY="608.0" size="20" />
+        <FontAwesomeIcon fill="WHITE" glyphName="DESKTOP" layoutX="22.0" layoutY="697.0" size="20" />
         <Label layoutX="305.0" layoutY="487.0" text="Enseignants" textFill="#0598ff">
             <font>
                 <Font name="Arial Narrow" size="25.0" />
@@ -49,27 +49,28 @@
                 <Font size="25.0" />
             </font>
         </Label>
-        <TableView layoutX="439.0" layoutY="90.0" prefHeight="317.0" prefWidth="802.0">
+        <TableView fx:id="tableauEmploiDuTemps" layoutX="305.0" layoutY="92.0" onMouseClicked="#getData" prefHeight="317.0" prefWidth="1000.0">
             <columns>
-                <TableColumn prefWidth="200.0" text="Enseignants" />
-                <TableColumn prefWidth="200.0" text="Cours" />
-                <TableColumn prefWidth="200.0" text="Heure" />
-                <TableColumn prefWidth="200.0" text="Classe" />
+                <TableColumn fx:id="enseignant" prefWidth="200.0" text="Enseignants" />
+                <TableColumn fx:id="cour" prefWidth="200.0" text="Cours" />
+                <TableColumn fx:id="heureDebut" prefWidth="200.0" text="Heure de début" />
+                <TableColumn fx:id="heureFin" prefWidth="200.0" text="Heure de fin" />
+            <TableColumn fx:id="classe" prefWidth="200.0" text="Classe" />
             </columns>
         </TableView>
-        <Button layoutX="704.0" layoutY="677.0" mnemonicParsing="false" style="-fx-background-color: red;" text="Supprimer" textFill="WHITE" />
-        <Button layoutX="943.0" layoutY="677.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Ajouter" textFill="WHITE" />
-        <Button layoutX="863.0" layoutY="677.0" mnemonicParsing="false" style="-fx-background-color: #0598ff;" text="Modifier" textFill="WHITE" />
-        <Button layoutX="787.0" layoutY="676.0" mnemonicParsing="false" style="-fx-background-color: Orange;" text="Annuler" textFill="WHITE" />
+        <Button fx:id="ajouter" layoutX="907.0" layoutY="661.0" mnemonicParsing="false" onAction="#createField" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: green;" text="ADD" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
         <TextField layoutX="327.0" layoutY="38.0" prefHeight="25.0" prefWidth="200.0" promptText="Veuillez entrer votre recherche...." style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
         <FontAwesomeIcon fill="#0598ff" glyphName="SEARCH" layoutX="529.0" layoutY="60.0" size="20" />
-        <TextField layoutX="472.0" layoutY="576.0" prefHeight="25.0" prefWidth="113.0" />
+        <TextField fx:id="entry2" layoutX="472.0" layoutY="576.0" prefHeight="25.0" prefWidth="113.0" />
         <Label layoutX="293.0" layoutY="571.0" text="Heure de début" textFill="#0598ff">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <TextField layoutX="857.0" layoutY="576.0" prefHeight="25.0" prefWidth="113.0" />
+        <TextField fx:id="entry3" layoutX="857.0" layoutY="576.0" prefHeight="25.0" prefWidth="113.0" />
         <Label layoutX="704.0" layoutY="571.0" text="Heure de fin" textFill="#0598ff">
             <font>
                 <Font size="24.0" />
@@ -80,10 +81,18 @@
                 <Font size="25.0" />
             </font>
         </Label>
-        <ChoiceBox fx:id="Liste" layoutX="422.0" layoutY="490.0" prefWidth="150.0" />
-        <ChoiceBox layoutX="807.0" layoutY="493.0" prefWidth="150.0" />
-        <ChoiceBox layoutX="1160.0" layoutY="493.0" prefWidth="150.0" />
       <Separator layoutX="274.0" layoutY="452.0" prefHeight="0.0" prefWidth="1096.0" />
       <Pane layoutX="261.0" layoutY="-1.0" prefHeight="30.0" prefWidth="1456.0" style="-fx-background-color: #0598ff;" />
+      <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" layoutX="34.0" layoutY="515.0" size="20" />
+      <TextField fx:id="entry" layoutX="442.0" layoutY="494.0" prefHeight="25.0" prefWidth="131.0" />
+      <TextField fx:id="entry1" layoutX="797.0" layoutY="496.0" prefHeight="25.0" prefWidth="138.0" />
+      <TextField fx:id="entry4" layoutX="1179.0" layoutY="496.0" prefHeight="25.0" prefWidth="138.0" />
+      <Button fx:id="supprimer" layoutX="659.0" layoutY="662.0" mnemonicParsing="false" onAction="#deleteField" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: red;" text="DELETE" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <FontAwesomeIcon fill="WHITE" glyphName="TRASH" layoutX="670.0" layoutY="687.0" size="20" />
+      <FontAwesomeIcon fill="WHITE" glyphName="PLUS" layoutX="914.0" layoutY="691.0" size="20" />
     </children>
 </AnchorPane>

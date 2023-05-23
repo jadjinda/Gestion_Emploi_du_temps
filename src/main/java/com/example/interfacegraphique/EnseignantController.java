@@ -1,24 +1,20 @@
 package com.example.interfacegraphique;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,117 +24,132 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ClassController implements Initializable {
+public class EnseignantController implements Initializable {
     Connection con = null;
     PreparedStatement st = null;
     ResultSet rs = null;
-    public Button supprimer,ajouter;
-    public TextField recup,recup1;
-    public TableView<Classe> tableau;
-    @FXML
-    private TableColumn<Classe, String> intitule;
-
-    @FXML
-    private TableColumn<Classe, String> code;
     int id=0;
+    public TextField entry,entry1,entry2,entry3,entry4,search;
+    public TableView<Enseignant> tableauEnseignant;
+    @FXML
+    private TableColumn<Enseignant, String> nom;
+    @FXML
+    private TableColumn<Enseignant, String> prenom;
+    @FXML
+    private TableColumn<Enseignant, String> tel;
+    @FXML
+    private TableColumn<Enseignant, String> numeroMatricule;
+    @FXML
+    private TableColumn<Enseignant, String> email;
+    public Button supprimerEnseignant,ajouterEnseignant,searchButton;
     public Button Acceuil;
+    public Button Classe;
+    public Button Enseignant;
     public Button Annee;
     public Button Cour;
-    public Button EmploiDuTemps;
     public Button Matiere;
-    public Button Enseignant;
+    public Button EmploiDuTemps;
     @Override
-    public void initialize(URL location, ResourceBundle ressourceBundle){
-        showClasse();
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        showEnseignant();
     }
-    public ObservableList<Classe> getClasse(){
-        ObservableList<Classe> classe = FXCollections.observableArrayList();
+    public ObservableList<Enseignant> getEnseignant(){
+        ObservableList<Enseignant> enseignants = FXCollections.observableArrayList();
 
-        String query = "SELECT * FROM classe";
+        String query = "SELECT * FROM enseignant";
         con = ConnexionDB.getConnect();
         try{
             st = con.prepareStatement(query);
             rs = st.executeQuery();
             while (rs.next()){
-                Classe clas = new Classe();
-                clas.setId(rs.getInt("id"));
-                clas.setIntitule(rs.getString("intitule"));
-                clas.setCode(rs.getString("code"));
-                classe.add(clas);
+                Enseignant a = new Enseignant();
+                a.setId(rs.getInt("id"));
+                a.setNom(rs.getString("nom"));
+                a.setPrenom(rs.getString("prenom"));
+                a.setTel(rs.getString("tel"));
+                a.setNumeroMatricule(rs.getString("numMat"));
+                a.setEmail(rs.getString("email"));
+                enseignants.add(a);
 
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return classe;
+        return enseignants;
     }
-    public void showClasse(){
-        ObservableList<Classe>liste= getClasse();
-        tableau.setItems(liste);
-        intitule.setCellValueFactory(new PropertyValueFactory<Classe,String>("intitule"));
-        code.setCellValueFactory(new PropertyValueFactory<Classe,String>("code"));
-    }
-
-    @FXML
-    void clearField(ActionEvent event){
-        clear();
+    public void showEnseignant(){
+        ObservableList<Enseignant>list= getEnseignant();
+        tableauEnseignant.setItems(list);
+        nom.setCellValueFactory(new PropertyValueFactory<Enseignant,String>("nom"));
+        prenom.setCellValueFactory(new PropertyValueFactory<Enseignant,String>("prenom"));
+        tel.setCellValueFactory(new PropertyValueFactory<Enseignant,String>("tel"));
+        numeroMatricule.setCellValueFactory(new PropertyValueFactory<Enseignant,String>("numeroMatricule"));
+        email.setCellValueFactory(new PropertyValueFactory<Enseignant,String>("email"));
     }
     @FXML
     void createField(ActionEvent event){
-        String insert = "INSERT INTO classe(intitule,code) VALUES(?,?)";
+        String insert = "INSERT INTO enseignant(nom,prenom,tel,numMat,email) VALUES(?,?,?,?,?)";
         con = ConnexionDB.getConnect();
         try {
             st = con.prepareStatement(insert);
-            st.setString(1,recup.getText());
-            st.setString(2,recup1.getText());
+            st.setString(1,entry.getText());
+            st.setString(2,entry1.getText());
+            st.setString(3,entry2.getText());
+            st.setString(4,entry3.getText());
+            st.setString(5,entry4.getText());
             st.executeUpdate();
-            showClasse();
+            showEnseignant();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    void searchField(ActionEvent event){
+        ObservableList<Enseignant> enseignants = FXCollections.observableArrayList();
+        String input = "SELECT nom,prenom,tel FROM enseignant where id=?";
+        con = ConnexionDB.getConnect();
+        try {
+            st = con.prepareStatement(input);
+            st.setString(1,search.getText());
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Enseignant enseignant = new Enseignant();
+                enseignant.setNom(rs.getString("nom"));
+                enseignant.setPrenom(rs.getString("prenom"));
+                enseignant.setTel(rs.getString("tel"));
+                enseignants.add(enseignant);
+                tableauEnseignant.setItems(enseignants);
+            }
+            System.out.println("hello");
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
     @FXML
     void getData(MouseEvent event) {
-        Classe classe = tableau.getSelectionModel().getSelectedItem();
-        id = classe.getId();
-        intitule.setText(classe.getIntitule());
-        code.setText(classe.getCode());
-        ajouter.setDisable(true);
-    }
-    void clear(){
-        intitule.setText(null);
-        code.setText(null);
-        ajouter.setDisable(true);
+        Enseignant course = tableauEnseignant.getSelectionModel().getSelectedItem();
+        id = course.getId();
+        nom.setText(course.getNom());
+        prenom.setText(course.getPrenom());
+        tel.setText(course.getTel());
+        numeroMatricule.setText(course.getNumeroMatricule());
+        email.setText(course.getEmail());
+        ajouterEnseignant.setDisable(true);
     }
     @FXML
     void deleteField(ActionEvent event){
-        String delete = "DELETE FROM classe WHERE id=?";
+        String delete = "DELETE FROM enseignant WHERE id=?";
         con = ConnexionDB.getConnect();
         try{
             st = con.prepareStatement(delete);
             st.setInt(1,id);
             st.executeUpdate();
-            showClasse();
+            showEnseignant();
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
-    @FXML
-    void updatesField(ActionEvent event){
-        String update = "UPDATE classe SET intitule = ?, code = ? WHERE id=?";
-        con = ConnexionDB.getConnect();
-        try {
-            st = con.prepareStatement(update);
-            st.setString(1,recup.getText());
-            st.setString(2,recup1.getText());
-            st.setInt(3,id);
-            st.executeUpdate();
-            showClasse();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-    public void acceuil() throws IOException{
+    public void acceuil() throws IOException {
         Stage stage = (Stage) Acceuil.getScene().getWindow();
         stage.close();
 
@@ -158,7 +169,19 @@ public class ClassController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("creationMatiere.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Acceuil");
+        primaryStage.setTitle("CREATION MATIERE");
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+    public void classe() throws IOException {
+        Stage stage = (Stage) Classe.getScene().getWindow();
+        stage.close();
+
+        Stage primaryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("creationClasse.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("CREATION DE CLASSE");
         primaryStage.setResizable(false);
         primaryStage.show();
     }

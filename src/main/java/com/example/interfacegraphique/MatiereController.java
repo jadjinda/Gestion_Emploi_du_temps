@@ -1,24 +1,20 @@
 package com.example.interfacegraphique;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,55 +24,55 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ClassController implements Initializable {
+public class MatiereController implements Initializable {
     Connection con = null;
     PreparedStatement st = null;
     ResultSet rs = null;
     public Button supprimer,ajouter;
     public TextField recup,recup1;
-    public TableView<Classe> tableau;
+    public TableView<Matiere> tableau;
     @FXML
-    private TableColumn<Classe, String> intitule;
+    private TableColumn<Matiere, String> intitule;
 
     @FXML
-    private TableColumn<Classe, String> code;
+    private TableColumn<Matiere, String> code;
     int id=0;
     public Button Acceuil;
     public Button Annee;
     public Button Cour;
     public Button EmploiDuTemps;
     public Button Matiere;
-    public Button Enseignant;
+    public Button Enseignant,Classe;
     @Override
     public void initialize(URL location, ResourceBundle ressourceBundle){
-        showClasse();
+        showMatiere();
     }
-    public ObservableList<Classe> getClasse(){
-        ObservableList<Classe> classe = FXCollections.observableArrayList();
+    public ObservableList<Matiere> getMatiere(){
+        ObservableList<Matiere> a = FXCollections.observableArrayList();
 
-        String query = "SELECT * FROM classe";
+        String query = "SELECT * FROM matiere";
         con = ConnexionDB.getConnect();
         try{
             st = con.prepareStatement(query);
             rs = st.executeQuery();
             while (rs.next()){
-                Classe clas = new Classe();
-                clas.setId(rs.getInt("id"));
-                clas.setIntitule(rs.getString("intitule"));
-                clas.setCode(rs.getString("code"));
-                classe.add(clas);
+                Matiere mat = new Matiere();
+                mat.setId(rs.getInt("id"));
+                mat.setIntitule(rs.getString("intitule"));
+                mat.setCode(rs.getString("code"));
+                a.add(mat);
 
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return classe;
+        return a;
     }
-    public void showClasse(){
-        ObservableList<Classe>liste= getClasse();
+    public void showMatiere(){
+        ObservableList<Matiere>liste= getMatiere();
         tableau.setItems(liste);
-        intitule.setCellValueFactory(new PropertyValueFactory<Classe,String>("intitule"));
-        code.setCellValueFactory(new PropertyValueFactory<Classe,String>("code"));
+        intitule.setCellValueFactory(new PropertyValueFactory<Matiere,String>("intitule"));
+        code.setCellValueFactory(new PropertyValueFactory<Matiere,String>("code"));
     }
 
     @FXML
@@ -85,24 +81,24 @@ public class ClassController implements Initializable {
     }
     @FXML
     void createField(ActionEvent event){
-        String insert = "INSERT INTO classe(intitule,code) VALUES(?,?)";
+        String insert = "INSERT INTO matiere(intitule,code) VALUES(?,?)";
         con = ConnexionDB.getConnect();
         try {
             st = con.prepareStatement(insert);
             st.setString(1,recup.getText());
             st.setString(2,recup1.getText());
             st.executeUpdate();
-            showClasse();
+            showMatiere();
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
     @FXML
     void getData(MouseEvent event) {
-        Classe classe = tableau.getSelectionModel().getSelectedItem();
-        id = classe.getId();
-        intitule.setText(classe.getIntitule());
-        code.setText(classe.getCode());
+        Matiere mat = tableau.getSelectionModel().getSelectedItem();
+        id = mat.getId();
+        intitule.setText(mat.getIntitule());
+        code.setText(mat.getCode());
         ajouter.setDisable(true);
     }
     void clear(){
@@ -112,33 +108,18 @@ public class ClassController implements Initializable {
     }
     @FXML
     void deleteField(ActionEvent event){
-        String delete = "DELETE FROM classe WHERE id=?";
+        String delete = "DELETE FROM matiere WHERE id=?";
         con = ConnexionDB.getConnect();
         try{
             st = con.prepareStatement(delete);
             st.setInt(1,id);
             st.executeUpdate();
-            showClasse();
+            showMatiere();
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
-    @FXML
-    void updatesField(ActionEvent event){
-        String update = "UPDATE classe SET intitule = ?, code = ? WHERE id=?";
-        con = ConnexionDB.getConnect();
-        try {
-            st = con.prepareStatement(update);
-            st.setString(1,recup.getText());
-            st.setString(2,recup1.getText());
-            st.setInt(3,id);
-            st.executeUpdate();
-            showClasse();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-    public void acceuil() throws IOException{
+    public void acceuil() throws IOException {
         Stage stage = (Stage) Acceuil.getScene().getWindow();
         stage.close();
 
@@ -147,6 +128,18 @@ public class ClassController implements Initializable {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Acceuil");
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+    public void classe() throws IOException {
+        Stage stage = (Stage) Classe.getScene().getWindow();
+        stage.close();
+
+        Stage primaryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("creationClasse.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("CREATION DE CLASSE");
         primaryStage.setResizable(false);
         primaryStage.show();
     }

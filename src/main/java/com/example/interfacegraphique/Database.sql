@@ -25,3 +25,39 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 intitule VARCHAR(30),
 code VARCHAR(30))ENGINE=InnoDB;
 INSERT INTO classe(intitule,code)VALUES('DEV WEB','IT231');
+
+CREATE TABLE matiere(
+id INT PRIMARY KEY AUTO_INCREMENT,
+intitule VARCHAR(30),
+code VARCHAR(30))ENGINE=InnoDB;
+
+CREATE TABLE enseignant(
+id INT PRIMARY KEY AUTO_INCREMENT,
+nom VARCHAR(30),
+prenom VARCHAR(30),
+tel VARCHAR(30),
+numMat VARCHAR(30),
+email VARCHAR(30))ENGINE=InnoDB;
+
+CREATE TABLE annee(
+id INT PRIMARY KEY AUTO_INCREMENT,
+code VARCHAR(30),
+dateDebut VARCHAR(30),
+dateFin VARCHAR(30))ENGINE=InnoDB;
+INSERT INTO annee(code,dateDebut,dateFin)VALUES('THK44','2021','2022');
+
+CREATE TABLE cour(
+id INT PRIMARY KEY AUTO_INCREMENT,
+matiere VARCHAR(30), 
+enseignant VARCHAR(30), 
+classe VARCHAR(30), 
+anneeScolaire VARCHAR(30))ENGINE=InnoDB;
+INSERT INTO cour(matiere,enseignant,classe,anneeScolaire)VALUES('DEV WEB','BATANA Ferdinand','AMPHI100','2021-2022');
+
+CREATE TABLE resumer(
+id INT PRIMARY KEY AUTO_INCREMENT,
+enseignant VARCHAR(30),
+cour VARCHAR(30),
+classe VARCHAR(30),
+heureDebut VARCHAR(30),
+heureFin VARCHAR(30))ENGINE=InnoDB;

@@ -34,12 +34,14 @@ public class AcceuilController implements Initializable {
     public Button Enseignant;
     public Button Annee;
     public Button Cour;
+    public Button Matiere;
     public Button EmploiDuTemps;
     public Button message1;
     public Button message2;
     public Button message3;
     public Button message4;
     public Button message5;
+    public Button message6;
     public Button logout;
 
     ObservableList<Tab> list = FXCollections.observableArrayList(
@@ -106,6 +108,18 @@ public class AcceuilController implements Initializable {
 
         Stage primaryStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("creationAnnee.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("CREATION D'ANNEE");
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+    public void matiere() throws IOException {
+        Stage stage = (Stage) Matiere.getScene().getWindow();
+        stage.close();
+
+        Stage primaryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("creationMatiere.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("CREATION D'ANNEE");

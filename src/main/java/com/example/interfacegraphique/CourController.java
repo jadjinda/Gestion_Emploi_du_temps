@@ -8,7 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -21,23 +24,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class PagesController implements Initializable{
+public class CourController implements Initializable {
     Connection con = null;
     PreparedStatement st = null;
     ResultSet rs = null;
-
-    //Creation Annee
     int id=0;
-    public TextField retour,date,date1;
-    public TableView<Annee> tableauAnnee;
+    public TextField entry,entry1,entry2,entry3;
+    public TableView<Cour> tableauCour;
     @FXML
-    private TableColumn<Annee, String> code;
+    private TableColumn<Cour, String> matiere;
     @FXML
-    private TableColumn<Annee, String> dateDebut;
+    private TableColumn<Cour, String> anneeScolaire;
     @FXML
-    private TableColumn<Annee, String> dateFin;
-
-    public Button supprimerAnnee,ajouterAnnee;
+    private TableColumn<Cour, String> enseignant;
+    @FXML
+    private TableColumn<Cour, String> classe;
+    public Button supprimerCour,ajouterCour;
     public Button Acceuil;
     public Button Classe;
     public Button Enseignant;
@@ -45,25 +47,81 @@ public class PagesController implements Initializable{
     public Button Cour;
     public Button Matiere;
     public Button EmploiDuTemps;
-    public ComboBox enseignant;
-    public ComboBox classe;
-    public ComboBox matiere;
-    public Button logout;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showAnnee();
+        showCour();
     }
-    public void message() throws IOException {
-        Alert ab = new Alert(Alert.AlertType.INFORMATION);
-        ab.setContentText("Vous n'êtes pas autorisé à accéder à cet menu\n" +
-                "Veuillez voir l'administrateur pour y accéder....");
-        ab.show();
+    public ObservableList<Cour> getCour(){
+        ObservableList<Cour> course = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM cour";
+        con = ConnexionDB.getConnect();
+        try{
+            st = con.prepareStatement(query);
+            rs = st.executeQuery();
+            while (rs.next()){
+                Cour a = new Cour();
+                a.setId(rs.getInt("id"));
+                a.setMatiere(rs.getString("matiere"));
+                a.setAnneeScolaire(rs.getString("anneeScolaire"));
+                a.setEnseignant(rs.getString("enseignant"));
+                a.setClasse(rs.getString("classe"));
+                course.add(a);
+
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return course;
     }
-    public void logout() throws IOException{
-        Stage stage = (Stage) logout.getScene().getWindow();
-        stage.close();
+    public void showCour(){
+        ObservableList<Cour>list= getCour();
+        tableauCour.setItems(list);
+        matiere.setCellValueFactory(new PropertyValueFactory<Cour,String>("matiere"));
+        anneeScolaire.setCellValueFactory(new PropertyValueFactory<Cour,String>("anneeScolaire"));
+        enseignant.setCellValueFactory(new PropertyValueFactory<Cour,String>("enseignant"));
+        classe.setCellValueFactory(new PropertyValueFactory<Cour,String>("classe"));
     }
-    public void acceuil() throws IOException{
+    @FXML
+    void createField(ActionEvent event){
+        String insert = "INSERT INTO cour(matiere,anneeScolaire,enseignant,classe) VALUES(?,?,?,?)";
+        con = ConnexionDB.getConnect();
+        try {
+            st = con.prepareStatement(insert);
+            st.setString(1,entry.getText());
+            st.setString(2,entry1.getText());
+            st.setString(3,entry2.getText());
+            st.setString(4,entry3.getText());
+            st.executeUpdate();
+            showCour();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    void getData(MouseEvent event) {
+        Cour course = tableauCour.getSelectionModel().getSelectedItem();
+        id = course.getId();
+        matiere.setText(course.getMatiere());
+        anneeScolaire.setText(course.getAnneeScolaire());
+        enseignant.setText(course.getEnseignant());
+        classe.setText(course.getClasse());
+        ajouterCour.setDisable(true);
+    }
+    @FXML
+    void deleteField(ActionEvent event){
+        String delete = "DELETE FROM cour WHERE id=?";
+        con = ConnexionDB.getConnect();
+        try{
+            st = con.prepareStatement(delete);
+            st.setInt(1,id);
+            st.executeUpdate();
+            showCour();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    public void acceuil() throws IOException {
         Stage stage = (Stage) Acceuil.getScene().getWindow();
         stage.close();
 
@@ -144,74 +202,5 @@ public class PagesController implements Initializable{
         primaryStage.setTitle("CREATION DE COUR");
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-
-    //CRUD POUR LES PAGES
-    //1- crud pour annee
-    public ObservableList<Annee> getAnnee(){
-        ObservableList<Annee> year = FXCollections.observableArrayList();
-
-        String query = "SELECT * FROM annee";
-        con = ConnexionDB.getConnect();
-        try{
-            st = con.prepareStatement(query);
-            rs = st.executeQuery();
-            while (rs.next()){
-                Annee a = new Annee();
-                a.setId(rs.getInt("id"));
-                a.setCode(rs.getString("code"));
-                a.setDateDebut(rs.getString("dateDebut"));
-                a.setDateFin(rs.getString("dateFin"));
-                year.add(a);
-
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return year;
-    }
-    public void showAnnee(){
-        ObservableList<Annee>list= getAnnee();
-        tableauAnnee.setItems(list);
-        code.setCellValueFactory(new PropertyValueFactory<Annee,String>("code"));
-        dateDebut.setCellValueFactory(new PropertyValueFactory<Annee,String>("dateDebut"));
-        dateFin.setCellValueFactory(new PropertyValueFactory<Annee,String>("dateFin"));
-    }
-    @FXML
-    void createField(ActionEvent event){
-        String insert = "INSERT INTO annee(code,dateDebut,dateFin) VALUES(?,?,?)";
-        con = ConnexionDB.getConnect();
-        try {
-            st = con.prepareStatement(insert);
-            st.setString(1,retour.getText());
-            st.setString(2,date.getText());
-            st.setString(3,date1.getText());
-            st.executeUpdate();
-            showAnnee();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    void getData(MouseEvent event) {
-        Annee year = tableauAnnee.getSelectionModel().getSelectedItem();
-        id = year.getId();
-        code.setText(year.getCode());
-        dateDebut.setText(year.getDateDebut());
-        dateFin.setText(year.getDateFin());
-        ajouterAnnee.setDisable(true);
-    }
-    @FXML
-    void deleteField(ActionEvent event){
-        String delete = "DELETE FROM annee WHERE id=?";
-        con = ConnexionDB.getConnect();
-        try{
-            st = con.prepareStatement(delete);
-            st.setInt(1,id);
-            st.executeUpdate();
-            showAnnee();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
     }
 }

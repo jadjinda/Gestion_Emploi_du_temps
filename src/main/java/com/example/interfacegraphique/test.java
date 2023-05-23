@@ -17,7 +17,7 @@ public class test extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("creationClasse.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("creationEnseignant.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(false);

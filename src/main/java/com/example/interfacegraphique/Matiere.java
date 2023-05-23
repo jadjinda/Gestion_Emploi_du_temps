@@ -1,16 +1,16 @@
 package com.example.interfacegraphique;
 
-public class Classe {
+public class Matiere {
+    public int id;
     public String intitule,code;
-    public static int id;
 
-    public Classe() {
+    public Matiere() {
         this.id = id;
         this.intitule = intitule;
         this.code = code;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
